@@ -31,8 +31,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/mholt/caddy/caddyhttp/httpserver"
-	"github.com/mholt/caddy/caddyhttp/staticfiles"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy/caddyhttp/staticfiles"
 )
 
 const testDirPrefix = "caddy_browse_test"

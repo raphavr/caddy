@@ -23,8 +23,8 @@ import (
 	"testing"
 	"text/template"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 	"github.com/russross/blackfriday"
 )
 

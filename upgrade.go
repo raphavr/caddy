@@ -46,7 +46,7 @@ func IsUpgrade() bool {
 //
 // TODO: For more information when debugging, see:
 // https://forum.golangbridge.org/t/bind-address-already-in-use-even-after-listener-closed/1510?u=matt
-// https://github.com/mholt/shared-conn
+// https://github.com/raphavr/shared-conn
 func Upgrade() error {
 	log.Println("[INFO] Upgrading")
 

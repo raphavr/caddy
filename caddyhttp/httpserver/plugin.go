@@ -27,12 +27,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyfile"
-	"github.com/mholt/caddy/caddyhttp/staticfiles"
-	"github.com/mholt/caddy/caddytls"
-	"github.com/mholt/caddy/telemetry"
 	"github.com/mholt/certmagic"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddyfile"
+	"github.com/raphavr/caddy/caddyhttp/staticfiles"
+	"github.com/raphavr/caddy/caddytls"
+	"github.com/raphavr/caddy/telemetry"
 )
 
 const serverType = "http"
@@ -628,6 +628,8 @@ var directives = []string{
 	"request_id",
 	"realip", // github.com/captncraig/caddy-realip
 	"git",    // github.com/abiosoft/caddy-git
+
+	"auth",
 
 	// directives that add listener middleware to the stack
 	"proxyprotocol", // github.com/mastercactapus/caddy-proxyprotocol

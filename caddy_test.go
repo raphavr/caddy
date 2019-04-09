@@ -20,7 +20,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/mholt/caddy/caddyfile"
+	"github.com/raphavr/caddy/caddyfile"
 )
 
 /*

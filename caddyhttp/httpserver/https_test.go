@@ -21,7 +21,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/mholt/caddy/caddytls"
+	"github.com/raphavr/caddy/caddytls"
 	"github.com/mholt/certmagic"
 )
 

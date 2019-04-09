@@ -18,8 +18,8 @@ import (
 	"net"
 	"strings"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 )
 
 // setup sets up the logging middleware.

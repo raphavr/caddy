@@ -22,8 +22,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 )
 
 // setup configures a new gzip middleware instance.

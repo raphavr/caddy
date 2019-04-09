@@ -20,7 +20,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 )
 
 // Handler is a middleware handler

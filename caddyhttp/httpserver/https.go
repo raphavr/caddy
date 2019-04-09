@@ -19,8 +19,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddytls"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddytls"
 	"github.com/mholt/certmagic"
 )
 

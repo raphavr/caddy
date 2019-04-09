@@ -4,14 +4,13 @@
 <h3 align="center">Every Site on HTTPS <!-- Serve Confidently --></h3>
 <p align="center">Caddy is a general-purpose HTTP/2 web server that serves HTTPS by default.</p>
 <p align="center">
-	<a href="https://travis-ci.org/mholt/caddy"><img src="https://img.shields.io/travis/mholt/caddy.svg?label=linux+build"></a>
-	<a href="https://ci.appveyor.com/project/mholt/caddy"><img src="https://img.shields.io/appveyor/ci/mholt/caddy.svg?label=windows+build"></a>
-	<a href="https://godoc.org/github.com/mholt/caddy"><img src="https://img.shields.io/badge/godoc-reference-blue.svg"></a>
-	<a href="https://goreportcard.com/report/mholt/caddy"><img src="https://goreportcard.com/badge/github.com/mholt/caddy"></a>
+	<a href="https://dev.azure.com/mholt-dev/Caddy/_build?definitionId=1"><img src="https://img.shields.io/azure-devops/build/mholt-dev/afec6074-9842-457f-98cf-69df6adbbf2e/1/master.svg?label=cross-platform%20tests"></a>
+	<a href="https://godoc.org/github.com/raphavr/caddy"><img src="https://img.shields.io/badge/godoc-reference-blue.svg"></a>
+	<a href="https://goreportcard.com/report/mholt/caddy"><img src="https://goreportcard.com/badge/github.com/raphavr/caddy"></a>
 	<br>
 	<a href="https://twitter.com/caddyserver" title="@caddyserver on Twitter"><img src="https://img.shields.io/badge/twitter-@caddyserver-55acee.svg" alt="@caddyserver on Twitter"></a>
 	<a href="https://caddy.community" title="Caddy Forum"><img src="https://img.shields.io/badge/community-forum-ff69b4.svg" alt="Caddy Forum"></a>
-	<a href="https://sourcegraph.com/github.com/mholt/caddy?badge" title="Caddy on Sourcegraph"><img src="https://sourcegraph.com/github.com/mholt/caddy/-/badge.svg" alt="Caddy on Sourcegraph"></a>
+	<a href="https://sourcegraph.com/github.com/raphavr/caddy?badge" title="Caddy on Sourcegraph"><img src="https://sourcegraph.com/github.com/raphavr/caddy/-/badge.svg" alt="Caddy on Sourcegraph"></a>
 </p>
 <p align="center">
 	<a href="https://caddyserver.com/download">Download</a> ·
@@ -23,7 +22,7 @@
 
 Caddy is a **production-ready** open-source web server that is fast, easy to use, and makes you more productive.
 
-Available for Windows, Mac, Linux, BSD, Solaris, and [Android](https://github.com/mholt/caddy/wiki/Running-Caddy-on-Android).
+Available for Windows, Mac, Linux, BSD, Solaris, and [Android](https://github.com/raphavr/caddy/wiki/Running-Caddy-on-Android).
 
 <p align="center">
 	<b>Thanks to our special sponsor:</b>
@@ -69,7 +68,7 @@ Altogether, Caddy can do things other web servers simply cannot do. Its features
 Caddy binaries have no dependencies and are available for every platform. Get Caddy any of these ways:
 
 - **[Download page](https://caddyserver.com/download)** (RECOMMENDED) allows you to customize your build in the browser
-- **[Latest release](https://github.com/mholt/caddy/releases/latest)** for pre-built, vanilla binaries
+- **[Latest release](https://github.com/raphavr/caddy/releases/latest)** for pre-built, vanilla binaries
 - **[AWS Marketplace](https://aws.amazon.com/marketplace/pp/B07J1WNK75?qid=1539015041932&sr=0-1&ref_=srh_res_product_title&cl_spe=C)** makes it easy to deploy directly to your cloud environment. <a href="https://aws.amazon.com/marketplace/pp/B07J1WNK75?qid=1539015041932&sr=0-1&ref_=srh_res_product_title&cl_spe=C" target="_blank">
 <img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Get Caddy on the AWS Marketplace" height="25"/></a>
 
@@ -78,8 +77,8 @@ Caddy binaries have no dependencies and are available for every platform. Get Ca
 
 To build from source you need **[Git](https://git-scm.com/downloads)** and **[Go](https://golang.org/doc/install)** (1.12 or newer). Follow these instruction for fast building:
 
-- Get the source with `go get github.com/mholt/caddy/caddy` and then run `go get github.com/caddyserver/builds`
-- Now `cd $GOPATH/src/github.com/mholt/caddy/caddy` and run `go run build.go`
+- Get the source with `go get github.com/raphavr/caddy/caddy` and then run `go get github.com/caddyserver/builds`
+- Now `cd $GOPATH/src/github.com/raphavr/caddy/caddy` and run `go run build.go`
 
 Then make sure the `caddy` binary is in your PATH.
 
@@ -145,7 +144,7 @@ Caddy is production-ready if you find it to be a good fit for your site and work
 
 **Running as root:** We advise against this. You can still listen on ports < 1024 on Linux using setcap like so: `sudo setcap cap_net_bind_service=+ep ./caddy`
 
-The Caddy project does not officially maintain any system-specific integrations nor suggest how to administer your own system. But your download file includes [unofficial resources](https://github.com/mholt/caddy/tree/master/dist/init) contributed by the community that you may find helpful for running Caddy in production.
+The Caddy project does not officially maintain any system-specific integrations nor suggest how to administer your own system. But your download file includes [unofficial resources](https://github.com/raphavr/caddy/tree/master/dist/init) contributed by the community that you may find helpful for running Caddy in production.
 
 How you choose to run Caddy is up to you. Many users are satisfied with `nohup caddy &`. Others use `screen`. Users who need Caddy to come back up after reboots either do so in the script that caused the reboot, add a command to an init script, or configure a service with their OS.
 
@@ -154,13 +153,13 @@ If you have questions or concerns about Caddy' underlying crypto implementations
 
 ## Contributing
 
-**[Join our forum](https://caddy.community) where you can chat with other Caddy users and developers!** To get familiar with the code base, try [Caddy code search on Sourcegraph](https://sourcegraph.com/github.com/mholt/caddy/)!
+**[Join our forum](https://caddy.community) where you can chat with other Caddy users and developers!** To get familiar with the code base, try [Caddy code search on Sourcegraph](https://sourcegraph.com/github.com/raphavr/caddy/)!
 
-Please see our [contributing guidelines](https://github.com/mholt/caddy/blob/master/.github/CONTRIBUTING.md) for instructions. If you want to write a plugin, check out the [developer wiki](https://github.com/mholt/caddy/wiki).
+Please see our [contributing guidelines](https://github.com/raphavr/caddy/blob/master/.github/CONTRIBUTING.md) for instructions. If you want to write a plugin, check out the [developer wiki](https://github.com/raphavr/caddy/wiki).
 
 We use GitHub issues and pull requests only for discussing bug reports and the development of specific changes. We welcome all other topics on the [forum](https://caddy.community)!
 
-If you want to contribute to the documentation, please [submit an issue](https://github.com/mholt/caddy/issues/new) describing the change that should be made.
+If you want to contribute to the documentation, please [submit an issue](https://github.com/raphavr/caddy/issues/new) describing the change that should be made.
 
 Thanks for making Caddy -- and the Web -- better!
 

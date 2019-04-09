@@ -42,7 +42,7 @@ import (
 
 	"github.com/lucas-clemente/quic-go"
 	"github.com/lucas-clemente/quic-go/h2quic"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 )
 
 var (
@@ -504,7 +504,7 @@ func (rp *ReverseProxy) copyResponse(dst io.Writer, src io.Reader) {
 }
 
 // skip these headers if they already exist.
-// see https://github.com/mholt/caddy/pull/1112#discussion_r80092582
+// see https://github.com/raphavr/caddy/pull/1112#discussion_r80092582
 var skipHeaders = map[string]struct{}{
 	"Content-Type":        {},
 	"Content-Disposition": {},
@@ -518,7 +518,7 @@ func copyHeader(dst, src http.Header) {
 	for k, vv := range src {
 		if _, ok := dst[k]; ok {
 			// skip some predefined headers
-			// see https://github.com/mholt/caddy/issues/1086
+			// see https://github.com/raphavr/caddy/issues/1086
 			if _, shouldSkip := skipHeaders[k]; shouldSkip {
 				continue
 			}

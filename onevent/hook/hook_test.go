@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/mholt/caddy"
+	"github.com/raphavr/caddy"
 )
 
 func TestHook(t *testing.T) {

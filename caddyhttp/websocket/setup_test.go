@@ -17,8 +17,8 @@ package websocket
 import (
 	"testing"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/caddyhttp/httpserver"
 )
 
 func TestWebSocket(t *testing.T) {

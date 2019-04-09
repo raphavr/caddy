@@ -28,9 +28,9 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/telemetry"
 	"github.com/mholt/certmagic"
+	"github.com/raphavr/caddy"
+	"github.com/raphavr/caddy/telemetry"
 )
 
 func init() {
