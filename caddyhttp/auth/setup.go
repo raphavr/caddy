@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"errors"
+	"log"
 	"os"
 	"time"
 
@@ -13,6 +15,7 @@ import (
 const (
 	pluginName = "auth"
 	serverType = "http"
+	tokenKey   = "token"
 
 	viperProviderKey   = "VIPER_PROVIDER"
 	viperEndpointKey   = "VIPER_ENDPOINT"
@@ -21,8 +24,8 @@ const (
 
 	viperProviderDefault   = "consul"
 	viperEndpointDefault   = "localhost:8500"
-	viperPathDefault       = "config/gold-proxy/token"
-	viperConfigTypeDefault = "VIPER_CONFIG_TYPE_KEY"
+	viperPathDefault       = "config/gold-proxy"
+	viperConfigTypeDefault = "json"
 )
 
 func setup(c *caddy.Controller) error {
@@ -70,11 +73,11 @@ func mustInitConfig(configReloadInterval time.Duration) {
 		getEnv(viperPathKey, viperPathDefault),
 	)
 
-	viper.SetConfigType("json")
+	viper.SetConfigType(getEnv(viperConfigTypeKey, viperConfigTypeDefault))
 
 	err := load()
 	if err != nil {
-		panic(err)
+		log.Print("[WARNING] Impossible to get auth config")
 	}
 	go reload(configReloadInterval)
 }
@@ -85,10 +88,6 @@ func load() error {
 		return err
 	}
 
-	store.RLock()
-	currentToken := store.token
-	store.RUnlock()
-
 	var m map[string]interface{}
 
 	err = viper.Unmarshal(&m)
@@ -96,9 +95,14 @@ func load() error {
 		return err
 	}
 
-	store.Lock()
-	store.token = currentToken
-	store.Unlock()
+	if token, found := m[tokenKey].(string); found {
+		store.Lock()
+		store.token = token
+		store.Unlock()
+	} else {
+		return errors.New("Token key not found")
+	}
+
 	return nil
 }
 
@@ -108,20 +112,24 @@ func reload(interval time.Duration) {
 
 		err := viper.ReadRemoteConfig()
 		if err != nil {
+			log.Print("[WARNING] Impossible to get auth config")
 			continue
 		}
 
-		store.RLock()
-		currentToken := store.token
-		store.RUnlock()
+		var m map[string]interface{}
 
-		err = viper.Unmarshal(&currentToken)
+		err = viper.Unmarshal(&m)
 		if err != nil {
+			log.Print("[WARNING] Impossible to unmarshal auth config")
 			continue
 		}
 
-		store.Lock()
-		store.token = currentToken
-		store.Unlock()
+		if token, found := m[tokenKey].(string); found {
+			store.Lock()
+			store.token = token
+			store.Unlock()
+		} else {
+			log.Print("[WARNING] Token key not found")
+		}
 	}
 }
