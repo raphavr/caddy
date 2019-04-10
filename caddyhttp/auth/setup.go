@@ -1,15 +1,13 @@
 package auth
 
 import (
-	"errors"
 	"log"
 	"os"
 	"time"
 
+	consulapi "github.com/armon/consul-api"
 	"github.com/raphavr/caddy"
 	"github.com/raphavr/caddy/caddyhttp/httpserver"
-	"github.com/spf13/viper"
-	_ "github.com/spf13/viper/remote"
 )
 
 const (
@@ -17,16 +15,16 @@ const (
 	serverType = "http"
 	tokenKey   = "token"
 
-	viperProviderKey   = "VIPER_PROVIDER"
-	viperEndpointKey   = "VIPER_ENDPOINT"
-	viperPathKey       = "VIPER_PATH"
-	viperConfigTypeKey = "VIPER_CONFIG_TYPE_KEY"
+	consulEndpointKey   = "CONSUL_ENDPOINT"
+	consulPathKey       = "CONSUL_PATH"
+	consulDataCenterKey = "CONSUL_DATA_CENTER"
 
-	viperProviderDefault   = "consul"
-	viperEndpointDefault   = "localhost:8500"
-	viperPathDefault       = "config/gold-proxy"
-	viperConfigTypeDefault = "json"
+	consulEndpointDefault   = "consul:8500"
+	consulPathDefault       = "config/gold-proxy/token"
+	consulDataCenterDefault = "dc1"
 )
+
+var consulClient *consulapi.Client
 
 func setup(c *caddy.Controller) error {
 	urlPattern, err := parseURLPattern(c)
@@ -67,69 +65,45 @@ func getEnv(key, fallback string) string {
 }
 
 func mustInitConfig(configReloadInterval time.Duration) {
-	viper.AddRemoteProvider(
-		getEnv(viperProviderKey, viperProviderDefault),
-		getEnv(viperEndpointKey, viperEndpointDefault),
-		getEnv(viperPathKey, viperPathDefault),
-	)
+	config := consulapi.DefaultConfig()
+	config.Address = getEnv(consulEndpointKey, consulEndpointDefault)
+	config.Datacenter = getEnv(consulDataCenterKey, consulDataCenterDefault)
 
-	viper.SetConfigType(getEnv(viperConfigTypeKey, viperConfigTypeDefault))
-
-	err := load()
+	var err error
+	consulClient, err = consulapi.NewClient(config)
 	if err != nil {
-		log.Print("[WARNING] Impossible to get auth config")
+		panic(err)
+	}
+
+	err = load()
+	if err != nil {
+		log.Print("[WARNING] Impossible to get config from consul:" + err.Error())
 	}
 	go reload(configReloadInterval)
 }
 
 func load() error {
-	err := viper.ReadRemoteConfig()
+	v, _, err := consulClient.KV().Get(getEnv(consulPathKey, consulPathDefault), nil)
 	if err != nil {
 		return err
 	}
 
-	var m map[string]interface{}
-
-	err = viper.Unmarshal(&m)
-	if err != nil {
-		return err
-	}
-
-	if token, found := m[tokenKey].(string); found {
+	if v == nil {
 		store.Lock()
-		store.token = token
+		store.token = ""
 		store.Unlock()
-	} else {
-		return errors.New("Token key not found")
+		return nil
 	}
 
+	store.Lock()
+	store.token = string(v.Value)
+	store.Unlock()
 	return nil
 }
 
 func reload(interval time.Duration) {
 	for {
 		time.Sleep(interval)
-
-		err := viper.ReadRemoteConfig()
-		if err != nil {
-			log.Print("[WARNING] Impossible to get auth config")
-			continue
-		}
-
-		var m map[string]interface{}
-
-		err = viper.Unmarshal(&m)
-		if err != nil {
-			log.Print("[WARNING] Impossible to unmarshal auth config")
-			continue
-		}
-
-		if token, found := m[tokenKey].(string); found {
-			store.Lock()
-			store.token = token
-			store.Unlock()
-		} else {
-			log.Print("[WARNING] Token key not found")
-		}
+		load()
 	}
 }
