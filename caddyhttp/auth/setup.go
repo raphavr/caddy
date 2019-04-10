@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -82,9 +81,7 @@ func mustInitConfig(configReloadInterval time.Duration) {
 
 func load() error {
 	err := viper.ReadRemoteConfig()
-	fmt.Println("1")
 	if err != nil {
-		fmt.Println("2")
 		return err
 	}
 
@@ -93,11 +90,9 @@ func load() error {
 	store.RUnlock()
 
 	var m map[string]interface{}
-	fmt.Println("t")
 
 	err = viper.Unmarshal(&m)
 	if err != nil {
-		fmt.Println("3")
 		return err
 	}
 
@@ -122,7 +117,7 @@ func reload(interval time.Duration) {
 
 		err = viper.Unmarshal(&currentToken)
 		if err != nil {
-			// log.Error(err.Error())
+			continue
 		}
 
 		store.Lock()
